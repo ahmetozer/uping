@@ -55,6 +55,10 @@ func Main(args []string) {
 
 	go share.NtpUpdateLoop(&timeOffset, *timeServer, *timeSyncInterval)
 
+	if share.IsMayOnlyIPv6(remoteAddr) {
+		remoteAddr = "[" + remoteAddr + "]"
+	}
+
 	p := make([]byte, 6)
 	conn, err := net.Dial("udp", remoteAddr+":50123")
 	if err != nil {
