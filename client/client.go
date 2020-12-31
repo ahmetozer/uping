@@ -14,7 +14,7 @@ import (
 
 // Main Client main function
 func Main(args []string) {
-	fmt.Println("Client Function Executed")
+	fmt.Println("Client Mode")
 	clientCmd := flag.NewFlagSet("client", flag.ExitOnError)
 	timeServer := clientCmd.String("timeserver", "time.cloudflare.com", "Time server which is used for updating time")
 	timeSyncInterval := clientCmd.Uint("tsi", 10, "Time sync interval for time client")

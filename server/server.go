@@ -50,7 +50,7 @@ func Main(args []string) {
 	}
 
 	defer conn.Close()
-
+	fmt.Printf("Server started and listening on \"%v\"\n", *listenAddr)
 	for {
 		buf := make([]byte, 3)
 		_, addr, err := conn.ReadFrom(buf)

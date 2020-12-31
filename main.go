@@ -10,7 +10,7 @@ import (
 
 var (
 	helpText = `
-Usage: oping mode -help
+Usage: uping mode -help
 Modes:
 	server: Run as server mode
 	client: Run as client mode
