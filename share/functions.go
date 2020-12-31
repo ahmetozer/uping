@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"regexp"
 	"time"
+	"unsafe"
 
 	"github.com/beevik/ntp"
 )
@@ -75,7 +76,28 @@ func NtpUpdateLoop(response **ntp.Response, timeServer string, waitTime uint) er
 		}
 		//fmt.Printf("time: synced %v \n", r)
 		time.Sleep(sleepDuration * time.Second)
-		//fmt.Printf("Time synced, the offset is \"%v\"\n", r.ClockOffset)
 	}
 
+}
+
+//TimeIntToByteArray unix time last ms to byte
+func TimeIntToByteArray(num int32) []byte {
+	//24 bit , 3 byte data
+	size := int32(3)
+	arr := make([]byte, size)
+	for i := int32(0); i < size; i++ {
+		byt := *(*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer(&num)) + uintptr(i)))
+		arr[i] = byt
+	}
+	return arr
+}
+
+//TimeByteArrayToInt converting byte to unix time
+func TimeByteArrayToInt(arr []byte) int32 {
+	val := int32(0)
+	size := len(arr)
+	for i := 0; i < size; i++ {
+		*(*uint8)(unsafe.Pointer(uintptr(unsafe.Pointer(&val)) + uintptr(i))) = arr[i]
+	}
+	return val
 }
