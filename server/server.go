@@ -30,7 +30,7 @@ func Main(args []string) {
 
 	serverCmd.Args()
 	if len(serverCmd.Args()) != 0 {
-		log.Fatalf("Argumant is not expected %v", serverCmd.Args())
+		log.Fatalf("Argument is not expected %v", serverCmd.Args())
 	}
 
 	var timeOffset *ntp.Response
@@ -46,12 +46,13 @@ func Main(args []string) {
 
 	conn, err := net.ListenPacket("udp", *listenAddr)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("error %v\n", err)
 	}
 
 	defer conn.Close()
 	fmt.Printf("Server started and listening on \"%v\"\n", *listenAddr)
 	for {
+		// Read only 3 byte
 		buf := make([]byte, 3)
 		_, addr, err := conn.ReadFrom(buf)
 		if err != nil {

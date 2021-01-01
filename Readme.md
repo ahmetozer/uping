@@ -28,22 +28,32 @@ Time synced, the offset is "365.299µs"
 
 Avaible client configurations:
 
-- -i float  
+- -c number  
+        Ping count
+- -i number  
         Ping interval (default 1)
+- -p number  
+        Remote server custom port number
 - --timeserver string  
         Time server which is used for updating time (default "time.cloudflare.com")
-- --tsi uint  
+- --tsi number
         Time sync interval for time client (default 10)
 
 ```bash
 uping client 203.0.113.123
 Client Mode
 Time synced, the offset is "-307.962038ms"
-6 bytes client > 36ms > server(203.0.113.123) > 50ms > client total 86
-6 bytes client > 36ms > server(203.0.113.123) > 50ms > client total 86
-6 bytes client > 37ms > server(203.0.113.123) > 49ms > client total 86
-6 bytes client > 38ms > server(203.0.113.123) > 50ms > client total 88
-6 bytes client > 38ms > server(203.0.113.123) > 50ms > client total 88
+
+Pinging from 172.17.0.2:45578 to 203.0.113.123:50123
+6 bytes client > 36ms > server(203.0.113.123) > 50ms > client total 86 seq 1
+6 bytes client > 36ms > server(203.0.113.123) > 50ms > client total 86 seq 2
+6 bytes client > 37ms > server(203.0.113.123) > 49ms > client total 86 seq 3
+6 bytes client > 38ms > server(203.0.113.123) > 50ms > client total 88 seq 4
+6 bytes client > 38ms > server(203.0.113.123) > 50ms > client total 88 seq 5
+
+5 packets transmitted, 5 received, 0% packet Loss 
+Average outbound packet delay 37
+Average inbound packet delay 50
 ```
 
 ## Install From Source
@@ -54,7 +64,7 @@ You can get source with git or download zip from github.
 
 ```bash
 git clone --depth 1 --single-branch  git@github.com:ahmetozer/uping.git
-
+cd uping
 # Get required libraries to build.
 go get -v .
 
