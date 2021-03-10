@@ -4,15 +4,15 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	share "github.com/ahmetozer/uping/share"
+	"github.com/beevik/ntp"
 	"log"
 	"net"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
-
-	share "github.com/ahmetozer/uping/share"
-	"github.com/beevik/ntp"
 )
 
 // Main Client main function
@@ -23,6 +23,7 @@ func Main(args []string) {
 	timeSyncInterval := clientCmd.Uint("tsi", 10, "Time sync interval for time client")
 	pingInterval := clientCmd.Float64("i", 1, "Ping interval")
 	remotePort := clientCmd.Uint("p", 50123, "Remote port")
+	sourcePort := clientCmd.Uint("sp", 0, "Source port")
 	pingCount := clientCmd.Uint("c", 0, "Ping count")
 	clientCmd.Parse(args)
 
@@ -80,7 +81,19 @@ func Main(args []string) {
 	}
 
 	p := make([]byte, 6)
-	conn, err := net.Dial("udp", fmt.Sprintf("%v:%v", remoteAddr, *remotePort))
+	sp, err := strconv.Atoi(fmt.Sprintf("%v",*sourcePort));
+	if err != nil {
+		// handle error
+		log.Fatalf("Source port err: %v",err)
+		os.Exit(2)
+	}
+
+	var dialer = &net.Dialer{
+		LocalAddr: &net.UDPAddr{
+			Port: sp,
+		},
+	}
+	conn, err := dialer.Dial("udp", fmt.Sprintf("%v:%v", remoteAddr, *remotePort))
 	if err != nil {
 		log.Fatalf("error %v\n", err)
 		return

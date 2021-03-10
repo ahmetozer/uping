@@ -34,6 +34,8 @@ Avaible client configurations:
         Ping interval (default 1)
 - -p number  
         Remote server custom port number
+- -sp number
+        Source port number
 - --timeserver string  
         Time server which is used for updating time (default "time.cloudflare.com")
 - --tsi number
