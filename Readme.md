@@ -60,19 +60,15 @@ Average inbound packet delay 50
 
 ## Install From Source
 
-For compiling, you have to install go on your system. If you use docker, you can also use my "ahmetozer/golang" container for compile.
-
-You can get source with git or download zip from github.
+For compiling, you have to install go on your system. If you want to use docker, you can also use my "ahmetozer/golang" container for compile and run.
 
 ```bash
-git clone --depth 1 --single-branch  git@github.com:ahmetozer/uping.git
-cd uping
-# Get required libraries to build.
-go get -v .
+# Get source
+go get github.com/ahmetozer/uping
 
 # To build
-go build
+go build github.com/ahmetozer/uping
 
-# Move to "/usr/bin/uping"
-mv uping  /usr/bin/uping
+# Run app
+uping
 ```
